@@ -1,0 +1,13 @@
+{
+  "name": "rynam",
+  "version": "1.0.0",
+  "description": "RynAm - alight motion tool",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "node test.js"
+  },
+  "dependencies": {
+    "axios": "^1.7.9"
+  }
+}

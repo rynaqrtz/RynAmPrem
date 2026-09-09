@@ -1,0 +1,6 @@
+node_modules/
+sessions.json
+data.json
+*.log
+.agents/
+skills-lock.json
