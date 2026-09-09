@@ -35,6 +35,7 @@ RynAm
 [2] verifikasi link + premium
 [3] premium dari sesi
 [4] lihat sesi
+[5] cek sesi
 `)
 
 // Menu 1 — kirim magic link ke email pengguna
@@ -78,6 +79,29 @@ function list() {
   for (const e of keys) console.log(`${e} | uid=${s[e].uid} | pro=${s[e].pro} | ${s[e].at}`)
 }
 
+// Menu 5 — cek validitas semua sesi dengan mencoba refresh token-nya
+async function check() {
+  const sessions = load()
+  const keys = Object.keys(sessions)
+  if (!keys.length) return console.log('kosong — tidak ada sesi tersimpan')
+  console.log(`memeriksa ${keys.length} sesi...`)
+  let okCount = 0
+  for (const email of keys) {
+    const s = sessions[email]
+    const r = await auth.refresh(s.refreshToken)
+    if (r.ok) {
+      okCount++
+      // Firebase bisa merotasi refresh token — simpan versi terbaru
+      sessions[email] = { ...s, refreshToken: r.refreshToken, at: new Date().toISOString() }
+      console.log(`${email} | ✓ valid`)
+    } else {
+      console.log(`${email} | ✗ ${r.why}`)
+    }
+  }
+  save(sessions)
+  console.log(`hasil: ${okCount}/${keys.length} sesi valid`)
+}
+
 // Entry point — tampilkan menu, lalu jalankan pilihan pengguna
 async function main() {
   menu()
@@ -86,6 +110,7 @@ async function main() {
   if (p === '2') await verify()
   if (p === '3') await fromSession()
   if (p === '4') list()
+  if (p === '5') await check()
 }
 
 main().catch(e => console.error(e.message))

@@ -95,6 +95,7 @@ RynAm
 [2] verifikasi link + premium
 [3] premium dari sesi
 [4] lihat sesi
+[5] cek sesi
 ```
 
 | Menu | Fungsi | Keterangan |
@@ -103,6 +104,7 @@ RynAm
 | `2` | ✅ verifikasi link | paste link dari email, sesi tersimpan |
 | `3` | 🔄 refresh sesi | aktivasi ulang pakai token tersimpan |
 | `4` | 📋 lihat sesi | daftar semua sesi di device ini |
+| `5` | 🔍 cek sesi | periksa validitas refresh token semua sesi |
 
 **Alur tipikal:**
 
