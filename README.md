@@ -17,7 +17,7 @@ Ringan 🪶 · Cepat ⚡ · Jalan di mana saja 📱💻
 [![Issues](https://img.shields.io/github/issues/rynaqrtz/RynAmPrem?style=for-the-badge)]()
 [![Last commit](https://img.shields.io/github/last-commit/rynaqrtz/RynAmPrem?style=for-the-badge)]()
 
-📖 [Tentang](#-tentang) · ✨ [Fitur](#-fitur) · 🚀 [Instalasi](#-instalasi) · 📖 [Cara Pakai](#-cara-pakai) · 🗂 [Struktur](#-struktur-proyek) · 🧪 [Testing](#-testing) · ❓ [FAQ](#-faq) · ⚠️ [Disclaimer](#-disclaimer)
+📖 [Tentang](#-tentang) · ✨ [Fitur](#-fitur) · 🚀 [Instalasi](#-instalasi) · 📖 [Cara Pakai](#-cara-pakai) · 🗂 [Struktur](#-struktur-proyek) · 🧪 [Testing](#-testing) · 📊 [Hasil Testing](#-hasil-testing) · ❓ [FAQ](#-faq) · ⚠️ [Disclaimer](#-disclaimer)
 
 </div>
 
@@ -143,6 +143,42 @@ npm test
 
 Test berjalan **sepenuhnya lokal** (mock) — tidak ada request dikirim ke
 server mana pun saat testing. Cocok 7/7 assertion untuk `extractCode`.
+
+## 📊 Hasil Testing (real, 5 email temp)
+
+Hasil tes end-to-end nyata pada `2026-09-09` menggunakan **5 email temp**
+(layanan mail.tm). Setiap email menjalani alur lengkap: kirim magic link →
+tunggu email masuk → ekstrak kode → verifikasi → refresh token → premium.
+
+### Ringkasan
+
+| Langkah | Hasil | Tingkat sukses |
+|---------|-------|:--------------:|
+| Kirim magic link | 5/5 | 100% |
+| Email masuk ke inbox | 5/5 | 100% |
+| Ekstraksi kode (`extractCode`) | 5/5 | 100% |
+| Verifikasi login (menu 2) | 5/5 | 100% |
+| Refresh token (menu 3) | 5/5 | 100% |
+| Latensi kirim → email masuk | rata-rata **4.8 detik** | min 4s · max 5s |
+| Aktivasi premium | 0/5 | 0% (stub — belum diimplementasikan) |
+
+> ⚠️ Latensi diukur dengan polling tiap 4 detik, jadi angka sebenarnya bisa
+> sedikit lebih cepat. Email temp bersifat sekali pakai dan hasil bisa
+> bervariasi tergantung kondisi server Firebase / layanan email.
+
+### Detail per email
+
+| # | Email temp | Kirim | Masuk | Latensi | Ekstrak | Verify | User baru | Refresh | Premium |
+|:-:|------------|:-----:|:-----:|:-------:|:-------:|:------:|:---------:|:-------:|:-------:|
+| 1 | `rynammtuoa795507@uberip.com` | ✅ | ✅ | 5s | ✅ | ✅ | ya | ✅ | ❌ stub |
+| 2 | `rynammtuoaddk445@uberip.com` | ✅ | ✅ | 4s | ✅ | ✅ | ya | ✅ | ❌ stub |
+| 3 | `rynammtuoalsi930@uberip.com` | ✅ | ✅ | 5s | ✅ | ✅ | ya | ✅ | ❌ stub |
+| 4 | `rynammtuoartb715@uberip.com` | ✅ | ✅ | 5s | ✅ | ✅ | ya | ✅ | ❌ stub |
+| 5 | `rynammtuob0bv206@uberip.com` | ✅ | ✅ | 5s | ✅ | ✅ | ya | ✅ | ❌ stub |
+
+Kesimpulan: alur **magic link — kirim → terima → verifikasi → refresh**
+berfungsi stabil. Satu-satunya langkah yang belum jalan adalah aktivasi
+premium karena memang belum diimplementasikan (stub agar CLI tidak crash).
 
 ## ❓ FAQ
 
