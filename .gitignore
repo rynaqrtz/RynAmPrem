@@ -2,5 +2,7 @@ node_modules/
 sessions.json
 data.json
 *.log
+npm-debug.log*
+.DS_Store
 .agents/
 skills-lock.json

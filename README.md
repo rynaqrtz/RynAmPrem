@@ -87,10 +87,12 @@ node index.js
 
 ## 📖 Cara Pakai
 
-Jalankan `node index.js`, lalu pilih menu:
+Jalankan `node index.js`, lalu pilih menu. Menu tampil **berulang** sampai
+kamu pilih `0` untuk keluar:
 
 ```
 RynAm
+[0] keluar
 [1] kirim magic link
 [2] verifikasi link + premium
 [3] premium dari sesi
@@ -105,6 +107,7 @@ RynAm
 | `3` | 🔄 refresh sesi | aktivasi ulang pakai token tersimpan |
 | `4` | 📋 lihat sesi | daftar semua sesi di device ini |
 | `5` | 🔍 cek sesi | periksa validitas refresh token semua sesi |
+| `0` | 🚪 keluar | tutup program |
 
 **Alur tipikal:**
 
@@ -144,7 +147,8 @@ npm test
 ```
 
 Test berjalan **sepenuhnya lokal** (mock) — tidak ada request dikirim ke
-server mana pun saat testing. Cocok 7/7 assertion untuk `extractCode`.
+server mana pun saat testing. Lolos **9/9 kasus** `extractCode` (termasuk
+format link asli dari email Firebase) + cek **5 ekspor fungsi** inti.
 
 ## 📊 Hasil Testing (real, 5 email temp)
 
