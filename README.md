@@ -1,114 +1,162 @@
 <div align="center">
 
-<img src="banner.jpg" alt="RynAm" width="736">
+<img src="banner.jpg" alt="RynAmPrem" width="736">
 
-# RynAm
+# ⚡ RynAmPrem
 
-**Alight Motion tool — CLI only, ringan, jalan di mana saja**
+**Alight Motion tool — CLI only. Ringan. Cepat. Jalan di mana saja.**
 
-<img src="https://img.shields.io/badge/node-18%2B-green" alt="">
-<img src="https://img.shields.io/badge/platform-termux%20%7C%20vps%20%7C%20linux-blue" alt="">
-<img src="https://img.shields.io/badge/license-MIT-orange" alt="">
+<img src="https://img.shields.io/badge/node-18%2B-339933?logo=node.js&logoColor=white" alt="node">
+<img src="https://img.shields.io/badge/platform-Termux%20%7C%20Linux%20%7C%20VPS-3ddc84?logo=android&logoColor=white" alt="platform">
+<img src="https://img.shields.io/badge/deps-1%20(axios)-blue" alt="deps">
+<img src="https://img.shields.io/badge/license-MIT-orange" alt="license">
+
+[Instalasi](#-instalasi) · [Cara Pakai](#-cara-pakai) · [Struktur](#-struktur-proyek) · [FAQ](#-faq) · [Disclaimer](#-disclaimer)
 
 </div>
 
-## Tentang
+---
 
-RynAm adalah tool CLI untuk Alight Motion dengan alur magic link — masuk cukup
-pakai email, tanpa password, tanpa akun Google. Seluruh logika ada di satu file
-(`lib/auth.js`), CLI-nya tipis di atasnya. Tanpa server, tanpa web UI, tanpa
-kebergantungan berlebih — hanya `axios`.
+## ✨ Tentang
 
-## Fitur
+RynAmPrem adalah tool CLI untuk Alight Motion dengan alur **magic link** —
+masuk cukup pakai email, tanpa password, tanpa akun Google.
 
-- **Magic link login** — kirim tautan login ke email, verifikasi, selesai
-- **Manajemen sesi** — token tersimpan lokal, bisa di-refresh kapan saja
-- **Ekstraksi kode pintar** — paste link utuh, link ter-encode, atau kode mentah
-- **Satu sumber kebenaran** — CLI dan logika tidak duplikat
+Dibangun dengan prinsip minimalis:
 
-## Instalasi
+> 🪶 Satu logika, satu CLI, satu dependency. Tidak ada server, tidak ada web UI,
+> tidak ada yang berlebihan.
+
+```
+┌──────────────┐      magic link       ┌─────────┐
+│   Terminal   │ ────────────────────▶ │  Email  │
+│  (index.js)  │ ◀──────────────────── │  kamu   │
+└──────────────┘    paste link balik   └─────────┘
+       │
+       ▼
+  sessions.json (lokal, aman di device kamu)
+```
+
+## 🚀 Instalasi
 
 ### Termux (Android)
 
 ```bash
 pkg update && pkg install nodejs git -y
-git clone https://github.com/rynaqrtz/RynAm
-cd RynAm
+git clone https://github.com/rynaqrtz/RynAmPrem
+cd RynAmPrem
 npm install
 node index.js
 ```
 
-### VPS / Linux / Windows
+### VPS / Linux / Windows / macOS
 
 ```bash
-git clone https://github.com/rynaqrtz/RynAm
-cd RynAm
+git clone https://github.com/rynaqrtz/RynAmPrem
+cd RynAmPrem
 npm install
 node index.js
 ```
 
-> Butuh Node.js 18 atau lebih baru. Cek dengan `node -v`.
+> **Syarat:** Node.js 18+. Cek versi dengan `node -v`.
 
-## Cara pakai
+## 📖 Cara Pakai
 
-Jalankan `node index.js` lalu pilih menu:
-
-| Menu | Fungsi |
-|:----:|--------|
-| `1` | kirim magic link ke email |
-| `2` | verifikasi link dari email |
-| `3` | refresh token dari sesi tersimpan |
-| `4` | lihat daftar sesi |
-
-Alur tipikal:
+Jalankan `node index.js`, lalu pilih menu:
 
 ```
-menu 1 → masukkan email → buka email, copy link
-menu 2 → masukkan email yang sama → paste link → selesai
+RynAmPrem
+[1] kirim magic link
+[2] verifikasi link + premium
+[3] premium dari sesi
+[4] lihat sesi
 ```
 
-Sesi tersimpan di `sessions.json` — file lokal berisi token, **jangan dibagikan
-ke siapa pun**. File ini sudah diabaikan git secara default.
+| Menu | Fungsi | Keterangan |
+|:----:|--------|------------|
+| `1` | 📤 kirim magic link | masukkan email, link dikirim ke inbox |
+| `2` | ✅ verifikasi link | paste link dari email, sesi tersimpan |
+| `3` | 🔄 refresh sesi | aktivasi ulang pakai token tersimpan |
+| `4` | 📋 lihat sesi | daftar semua sesi di device ini |
 
-## Struktur proyek
+**Alur tipikal:**
+
+```text
+menu 1 → masukkan email → buka email → copy link
+menu 2 → masukkan email yang sama → paste link → selesai ✔
+```
+
+Ekstraksi kode pintar: paste **link utuh**, **link ter-encode**, atau
+**kode mentah** — semuanya dikenali otomatis.
+
+## 🔒 Sesi Kamu
+
+Sesi tersimpan di `sessions.json` di folder proyek:
+
+- ✅ Lokal 100% di device kamu
+- ✅ Otomatis diabaikan git (sudah ada di `.gitignore`)
+- ⚠️ Berisi token — **jangan dibagikan ke siapa pun**
+
+## 🗂 Struktur Proyek
 
 ```
-RynAm/
-├── index.js       CLI — menu, input, penyimpanan sesi
+RynAmPrem/
+├── index.js        CLI — menu, input, penyimpanan sesi
 ├── lib/
-│   └── auth.js    logika inti — link, verify, refresh, extractCode
-├── test.js        self-check tanpa request ke server
+│   └── auth.js     logika inti — link, verify, refresh, extractCode
+├── test.js         self-check lokal, tanpa request ke server
 ├── banner.jpg
+├── LICENSE
 └── package.json
 ```
 
-## Test
+## 🧪 Test
 
 ```bash
 npm test
 ```
 
-Test berjalan sepenuhnya lokal (mock) — tidak ada request dikirim ke server
-mana pun saat testing.
+Test berjalan **sepenuhnya lokal** (mock) — tidak ada request dikirim ke
+server mana pun saat testing. Cocok 7/7 assertion untuk `extractCode`.
 
-## FAQ
+## ❓ FAQ
 
-**Bisa jalan di Termux?**
-Ya, itu salah satu target utamanya. Cukup Node.js 18+.
+<details>
+<summary><b>Bisa jalan di Termux?</b></summary>
+<br>Ya — itu salah satu target utamanya. Cukup Node.js 18+ dari `pkg install nodejs`.
+</details>
 
-**Di mana sesi saya disimpan?**
-Di `sessions.json` di folder proyek, lokal di device kamu.
+<details>
+<summary><b>Di mana sesi saya disimpan?</b></summary>
+<br>Di <code>sessions.json</code> di folder proyek, lokal di device kamu.
+</details>
 
-**Kenapa CLI saja?**
-Ringan, cepat, dan cukup. Tidak perlu server untuk tool seperti ini.
+<details>
+<summary><b>Kenapa CLI saja, tanpa web?</b></summary>
+<br>Ringan, cepat, dan cukup. Untuk tool seperti ini, server adalah beban — bukan fitur.
+</details>
 
-## Disclaimer
+<details>
+<summary><b>Link saya tidak dikenali?</b></summary>
+<br>Paste seluruh URL dari email, termasuk <code>https://</code> di depan. Kalau masih
+gagal, coba menu 4 untuk cek apakah sesi sudah tersimpan.
+</details>
+
+## ⚠️ Disclaimer
 
 Proyek riset independen untuk keperluan pembelajaran. Tidak berafiliasi dengan
 Alight Creative / Google. Semua merek dagang milik pemiliknya masing-masing.
 Gunakan atas risiko sendiri — segala konsekuensi penggunaan menjadi tanggung
 jawab pengguna.
 
-## Lisensi
+## 📄 Lisensi
 
 [MIT](LICENSE)
+
+---
+
+<div align="center">
+
+**dibuat oleh [rynaqrtz](https://github.com/rynaqrtz)**
+
+</div>
